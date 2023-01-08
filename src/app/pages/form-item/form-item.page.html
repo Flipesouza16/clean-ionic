@@ -1,9 +1,19 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>form-item</ion-title>
+    <div class="container-title">
+      <ion-icon (click)="backToPreviousPage()" name="arrow-back"></ion-icon>
+      <ion-title>Form Item</ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="form">
+    <ion-item class="item">
+      <ion-label position="floating" for="">Name Item</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+  </form>
 
+  <ion-button shape="round" expand="full" (click)="submit()">Add Item</ion-button>
 </ion-content>

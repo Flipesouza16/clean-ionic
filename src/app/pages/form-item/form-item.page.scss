@@ -1,0 +1,18 @@
+.container-title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  margin-left: 20px;
+
+  ion-icon {
+    font-size: 25px;
+  }
+}
+
+form {
+  .item {
+    padding: 5px;
+    border-radius: 30px;
+  }
+}
