@@ -10,9 +10,22 @@
 <ion-content>
   <form [formGroup]="form">
     <ion-item class="item">
-      <ion-label position="floating" for="">Name Item</ion-label>
+      <ion-label position="floating">Name Item</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
+
+    <ion-item [disabled]="!isLocalizationFilled" class="item">
+      <div class="container">
+        <span class="title">Current location</span>
+
+        <ng-template [ngIf]="isLocalizationFilled">
+          <span class="value">Latitude: {{ localization.latitude }}</span>
+          <span class="value">Longitude: {{ localization.longitude }}</span>
+        </ng-template>
+      </div>
+    </ion-item>
+
+    <button class="button-localization" (click)="getCurrentLocalization()">Get your current localization</button>
   </form>
 
   <ion-button shape="round" expand="full" (click)="submit()">Add Item</ion-button>
