@@ -1,0 +1,19 @@
+.list-items {
+  .item {
+    padding: 3px;
+    margin: 5px;
+    border-radius: 5px;
+    background: #363636;
+
+    .info-items {
+      display: flex;
+      flex-direction: column;
+      margin: 2px;
+
+      img {
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+    }
+  }
+}
