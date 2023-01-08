@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-items',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-items.page.scss'],
 })
 export class ListItemsPage implements OnInit {
+  private urlRouteFormItem = 'form-item'
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  navigateToFormItem(){
+    this.router.navigate([`/${this.urlRouteFormItem}`])
   }
 
 }
