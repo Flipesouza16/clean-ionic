@@ -6,6 +6,8 @@ import { Localization } from 'src/app/pages/form-item/form-item-create.interface
   providedIn: 'root'
 })
 export class GeolocationService {
+  title = 'title sim'
+
   async getCurrentLocalization(): Promise<Localization> {
     try {
       const coordinates = await Geolocation.getCurrentPosition();
