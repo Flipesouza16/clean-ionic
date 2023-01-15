@@ -63,6 +63,7 @@
   },
   "description": "An Ionic project",
   "jest": {
+    "modulePaths": ["<rootDir>"],
     "preset": "jest-preset-angular",
     "setupFilesAfterEnv": [
       "<rootDir>/src/setup.jest.ts"
