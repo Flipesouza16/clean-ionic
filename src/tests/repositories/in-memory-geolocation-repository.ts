@@ -1,18 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Position } from "@capacitor/geolocation";
 import { GeolocationRepository } from "src/app/repositories/geolocation-repository";
-import { Localization } from "src/app/shared/interfaces/geolocation/geolocation.interface";
+import { Localization, PositionCoords } from "src/app/shared/interfaces/geolocation/geolocation.interface";
 import { makeGeolocationPositionMock } from "../factories/geolocation-factory";
-
-type PositionCoords = {
-  latitude: number;
-  longitude: number;
-  accuracy: number;
-  altitudeAccuracy: number | null | undefined;
-  altitude: number | null;
-  speed: number | null;
-  heading: number | null;
-}
 
 @Injectable({
   providedIn: 'root'
