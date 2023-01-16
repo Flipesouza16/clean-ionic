@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Position } from "@capacitor/geolocation";
 import { GeolocalizationRepository } from "src/app/repositories/geolocalization-repository";
+import { Localization } from "src/app/shared/interfaces/geolocalization/geolocalization.interface";
+import { makeGeolocalizationPositionMock } from "../factories/geolocalization-factory";
 
 type PositionCoords = {
   latitude: number;
@@ -16,18 +18,7 @@ type PositionCoords = {
   providedIn: 'root'
 })
 export class InMemoryGeolocalizationRepository implements GeolocalizationRepository {
-  private _position: Position = {
-    timestamp: 0,
-    coords: {
-      latitude: 150,
-      longitude: 250,
-      accuracy: 0,
-      altitude: 0,
-      altitudeAccuracy: 0,
-      heading: 0,
-      speed: 0
-    }
-  }
+  private _position = makeGeolocalizationPositionMock()
 
   async getCurrentLocalization(): Promise<Position> {
     return this._position;
@@ -40,5 +31,12 @@ export class InMemoryGeolocalizationRepository implements GeolocalizationReposit
   public get coords(): PositionCoords {
     return this._position.coords
   }
-}
 
+  public setLocalizationMockToCoords(localizationMock: Localization): void {
+    this._position.coords = {
+      ...this._position.coords,
+      latitude: +localizationMock.latitude,
+      longitude: +localizationMock.longitude
+    }
+  }
+}
