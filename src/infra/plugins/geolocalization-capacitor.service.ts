@@ -7,12 +7,7 @@ import { Geolocation, Position } from '@capacitor/geolocation';
 export class GeolocationCapacitorService {
 
   async getCurrentLocalization(): Promise<Position> {
-    try {
-      const position = await Geolocation.getCurrentPosition();
-      return position
-    } catch(error) {
-      console.error(error)
-      throw error
-    }
+    const position = await Geolocation.getCurrentPosition();
+    return position
   }
 }
