@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Localization, ReactiveFormItemCreate } from './form-item-create.interface';
+import { ReactiveFormItemCreate } from './form-item-create.interface';
 import { GeolocalizationService } from 'src/app/shared/services/geolocalization/geolocalization.service';
+import { Localization } from 'src/app/shared/interfaces/geolocalization/geolocalization.interface';
 
 @Component({
   selector: 'app-form-item',
