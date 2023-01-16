@@ -6,8 +6,3 @@ export type ReactiveFormItemCreate = {
   localizationLatitude: FormControl<string | null>;
   image: FormControl<string | null>;
 }
-
-export type Localization = {
-  longitude: string
-  latitude: string
-}
