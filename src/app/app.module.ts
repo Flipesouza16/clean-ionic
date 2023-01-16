@@ -7,8 +7,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PagesModule } from './pages/pages.module';
-import { GeolocalizationRepository } from './repositories/geolocalization-repository';
-import { GeolocationCapacitorService } from 'src/infra/plugins/geolocalization-capacitor.service';
+import { GeolocationRepository } from './repositories/geolocation-repository';
+import { GeolocationCapacitorService } from 'src/infra/plugins/geolocation-capacitor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +21,7 @@ import { GeolocationCapacitorService } from 'src/infra/plugins/geolocalization-c
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
-      provide: GeolocalizationRepository,
+      provide: GeolocationRepository,
       useClass: GeolocationCapacitorService
     },
   ],

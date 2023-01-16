@@ -3,8 +3,8 @@ import { Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormItemCreate } from './form-item-create.interface';
-import { GeolocalizationService } from 'src/app/shared/services/geolocalization/geolocalization.service';
-import { Localization } from 'src/app/shared/interfaces/geolocalization/geolocalization.interface';
+import { GeolocationService } from 'src/app/shared/services/geolocation/geolocation.service';
+import { Localization } from 'src/app/shared/interfaces/geolocation/geolocation.interface';
 
 @Component({
   selector: 'app-form-item',
@@ -23,7 +23,7 @@ export class FormItemPage {
     private platform: Platform,
     private location: Location,
     private formBuilder: FormBuilder,
-    private geolocalizationService: GeolocalizationService,
+    private geolocationService: GeolocationService,
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.backToPreviousPage();
@@ -64,7 +64,7 @@ export class FormItemPage {
   }
 
   async getCurrentLocalization(): Promise<void> {
-    const newLocalization = await this.geolocalizationService.getCurrentLocalization()
+    const newLocalization = await this.geolocationService.getCurrentLocalization()
 
     if(newLocalization) {
       this.isLocalizationFilled = true

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Position } from '@capacitor/geolocation';
-import { GeolocalizationRepository } from 'src/app/repositories/geolocalization-repository';
-import { Localization } from '../../interfaces/geolocalization/geolocalization.interface';
+import { GeolocationRepository } from 'src/app/repositories/geolocation-repository';
+import { Localization } from '../../interfaces/geolocation/geolocation.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GeolocalizationService {
-  constructor(private geolocationPlugin: GeolocalizationRepository) {}
+export class GeolocationService {
+  constructor(private geolocationPlugin: GeolocationRepository) {}
 
   createLocalizationFromCoordinates({ coords: coordinates }: Position): Localization {
     return {

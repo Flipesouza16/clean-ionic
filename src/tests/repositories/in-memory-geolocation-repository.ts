@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Position } from "@capacitor/geolocation";
-import { GeolocalizationRepository } from "src/app/repositories/geolocalization-repository";
-import { Localization } from "src/app/shared/interfaces/geolocalization/geolocalization.interface";
-import { makeGeolocalizationPositionMock } from "../factories/geolocalization-factory";
+import { GeolocationRepository } from "src/app/repositories/geolocation-repository";
+import { Localization } from "src/app/shared/interfaces/geolocation/geolocation.interface";
+import { makeGeolocationPositionMock } from "../factories/geolocation-factory";
 
 type PositionCoords = {
   latitude: number;
@@ -17,8 +17,8 @@ type PositionCoords = {
 @Injectable({
   providedIn: 'root'
 })
-export class InMemoryGeolocalizationRepository implements GeolocalizationRepository {
-  private _position = makeGeolocalizationPositionMock()
+export class InMemoryGeolocationRepository implements GeolocationRepository {
+  private _position = makeGeolocationPositionMock()
 
   async getCurrentLocalization(): Promise<Position> {
     return this._position;
