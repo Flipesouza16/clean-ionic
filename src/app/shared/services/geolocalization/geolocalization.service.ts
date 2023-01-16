@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Position } from '@capacitor/geolocation';
-import { Localization } from 'src/app/pages/form-item/form-item-create.interface';
 import { GeolocalizationRepository } from 'src/app/repositories/geolocalization-repository';
+import { Localization } from '../../interfaces/geolocalization/geolocalization.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeolocalizationService {
   constructor(private geolocationPlugin: GeolocalizationRepository) {}
+
+  createLocalizationFromCoordinates({ coords: coordinates }: Position): Localization {
+    return {
+      latitude: coordinates.latitude.toString(),
+      longitude: coordinates.longitude.toString(),
+    }
+  }
 
   async getCurrentLocalization(): Promise<Localization> {
     try {
@@ -17,13 +24,6 @@ export class GeolocalizationService {
     } catch(error) {
       console.error(error)
       throw error
-    }
-  }
-
-  createLocalizationFromCoordinates(coordinates: Position): Localization {
-    return {
-      latitude: coordinates.coords.latitude.toString(),
-      longitude: coordinates.coords.longitude.toString(),
     }
   }
 }
