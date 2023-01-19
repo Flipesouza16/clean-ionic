@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormItemCreate } from './form-item-create.interface';
 import { GeolocationService } from 'src/app/shared/services/geolocation/geolocation.service';
 import { Localization } from 'src/app/shared/interfaces/geolocation/geolocation.interface';
+import { Camera } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
+import { CameraResultType, CameraSource } from '@capacitor/camera/dist/esm/definitions';
 
 @Component({
   selector: 'app-form-item',
@@ -18,6 +21,7 @@ export class FormItemPage {
     latitude: ''
   };
   public isLocalizationFilled = false
+  public image = ''
 
   constructor(
     private platform: Platform,
@@ -70,6 +74,18 @@ export class FormItemPage {
       this.isLocalizationFilled = true
       this.localization = newLocalization;
       this.setReactiveFormLocalization(newLocalization);
+    }
+  }
+
+  async openCamera(): Promise<void> {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      source: CameraSource.Camera,
+      resultType: CameraResultType.Uri
+    })
+
+    if(image.path) {
+      this.image = Capacitor.convertFileSrc(image.path)
     }
   }
 

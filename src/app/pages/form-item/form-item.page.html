@@ -26,6 +26,14 @@
     </ion-item>
 
     <button class="button-localization" (click)="getCurrentLocalization()">Get your current localization</button>
+
+    <ion-item class="item">
+      <span position="floating">Image</span>
+    </ion-item>
+
+    <img *ngIf="image?.length" class="image" [src]="image" alt="">
+
+    <button class="button-localization" (click)="openCamera()">Open your camera</button>
   </form>
 
   <ion-button shape="round" expand="full" (click)="submit()">Add Item</ion-button>
