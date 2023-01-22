@@ -89,7 +89,24 @@ export class FormItemPage {
     }
   }
 
+  checkIfHaveSomeInvalidField(): boolean {
+    const invalidField = ListFields.find(field => !this.isFieldValid(field))
+
+    if(invalidField) {
+      console.log('invalidField: ',invalidField)
+    }
+
+    return !!invalidField
+  }
+
+  isFieldValid(field: AllFiedls): boolean {
+    return !!this.form.get(field)?.valid
+  }
+
   submit(): void {
+    const isSomeInvalidField = this.checkIfHaveSomeInvalidField()
+    if(isSomeInvalidField) return undefined
+
     console.log('this.form.controls: ', this.form.controls);
   }
 }
