@@ -2,7 +2,7 @@ import { Photo } from "@capacitor/camera";
 
 type OverridePhoto = Partial<Photo>
 
-export function makePhoto(override: OverridePhoto = {}): Photo {
+export function makePhotoMock(override: OverridePhoto = {}): Photo {
   return {
     format: "jpeg",
     path: "file:///storage/emulated/0/Android/.jpg",
