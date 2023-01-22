@@ -8,6 +8,9 @@ import { Localization } from 'src/app/shared/interfaces/geolocation/geolocation.
 import { Capacitor } from '@capacitor/core';
 import { CameraService } from 'src/app/shared/services/camera/camera.service';
 
+const ListFields = ['name', 'image', 'localizationLongitude', 'localizationLatitude'] as const
+type AllFiedls = typeof ListFields[number]
+
 @Component({
   selector: 'app-form-item',
   templateUrl: './form-item.page.html',
