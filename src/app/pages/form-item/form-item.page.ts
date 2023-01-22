@@ -84,7 +84,8 @@ export class FormItemPage {
     const image = await this.cameraService.openCamera()
 
     if(image.path) {
-      this.image = Capacitor.convertFileSrc(image.path)
+      this.photo = Capacitor.convertFileSrc(image.path)
+      this.form.controls['image'].setValue(this.photo)
     }
   }
 
