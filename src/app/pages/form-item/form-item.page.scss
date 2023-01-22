@@ -15,14 +15,6 @@ form {
     padding: 5px;
     border-radius: 30px;
 
-    .image {
-      max-width: 181px;
-      width: 100%;
-      height: 100%;
-      margin: auto;
-      display: flex;
-    }
-
     .container {
       display: flex;
       flex-direction: column;
@@ -37,7 +29,14 @@ form {
         padding: 2px;
       }
     }
+  }
 
+  .image {
+    max-width: 181px;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    display: flex;
   }
 
   .button-localization {
