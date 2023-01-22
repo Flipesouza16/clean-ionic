@@ -23,7 +23,7 @@ export class FormItemPage {
     latitude: ''
   };
   public isLocalizationFilled = false
-  public image = ''
+  public photo = ''
 
   constructor(
     private platform: Platform,
@@ -38,9 +38,9 @@ export class FormItemPage {
 
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      image: ['', Validators.required],
       localizationLongitude: ['' , Validators.required],
       localizationLatitude: ['' , Validators.required],
+      image: ['', Validators.required],
     });
 
     this.updateLocalization(this.form)

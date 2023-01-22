@@ -28,10 +28,10 @@
     <button class="button-localization" (click)="getCurrentLocalization()">Get your current localization</button>
 
     <ion-item class="item">
-      <span position="floating">Image</span>
+      <span position="floating">Photo</span>
     </ion-item>
 
-    <img *ngIf="image?.length" class="image" [src]="image" alt="">
+    <img *ngIf="photo?.length" class="image" [src]="photo" alt="">
 
     <button class="button-localization" (click)="openCamera()">Open your camera</button>
   </form>
