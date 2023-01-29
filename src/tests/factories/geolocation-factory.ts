@@ -8,8 +8,8 @@ export function makeGeolocationPositionMock(override: OverridePositionCoords = {
   return {
     timestamp: 0,
     coords: {
-      latitude: 150,
-      longitude: 250,
+      latitude: generateRandomLatLong().latitude,
+      longitude: generateRandomLatLong().longitude,
       accuracy: 0,
       altitude: 0,
       altitudeAccuracy: 0,
@@ -20,10 +20,17 @@ export function makeGeolocationPositionMock(override: OverridePositionCoords = {
   }
 }
 
+function generateRandomLatLong() {
+  const latitude = (Math.random() * 180) - 90;
+  const longitude = (Math.random() * 360) - 180;
+
+  return { latitude, longitude };
+}
+
 export function makeLocalizationMock(override: OverrideLocalization = {}): Localization {
   return {
-    latitude: '150',
-    longitude: '250',
+    latitude: generateRandomLatLong().latitude.toString(),
+    longitude: generateRandomLatLong().longitude.toString(),
     ...override
   }
 }
