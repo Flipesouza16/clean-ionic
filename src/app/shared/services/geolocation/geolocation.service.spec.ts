@@ -2,7 +2,10 @@ import { makeGeolocationPositionMock, makeLocalizationMock } from 'src/tests/fac
 import { InMemoryGeolocationRepository } from 'src/tests/repositories/in-memory-geolocation-repository';
 import { GeolocationService } from './geolocation.service'
 
-const currentLocalizationMock = makeLocalizationMock()
+const currentLocalizationMock = makeLocalizationMock({
+  latitude: '255',
+  longitude: '350'
+})
 
 function initializeServiceWithLocalizationMock(): GeolocationService {
   const geolocationRepository = new InMemoryGeolocationRepository()
@@ -20,7 +23,11 @@ describe("Geolocation Service", () => {
   })
 
   it("should return a new localization object from coordinates", async () => {
-    const positionCoordinates = makeGeolocationPositionMock()
+    const positionCoordinates = makeGeolocationPositionMock({
+      latitude: Number(currentLocalizationMock.latitude),
+      longitude: Number(currentLocalizationMock.longitude),
+    });
+
     const newLocalization = geolocationService.createLocalizationFromCoordinates(positionCoordinates);
 
     expect(newLocalization).toBeTruthy();
