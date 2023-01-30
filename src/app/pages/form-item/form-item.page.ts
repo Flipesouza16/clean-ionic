@@ -7,6 +7,7 @@ import { GeolocationService } from 'src/app/shared/services/geolocation/geolocat
 import { Localization } from 'src/app/shared/interfaces/geolocation/geolocation.interface';
 import { Capacitor } from '@capacitor/core';
 import { CameraService } from 'src/app/shared/services/camera/camera.service';
+import { Photo } from '@capacitor/camera';
 
 const ListFields = ['name', 'image', 'localizationLongitude', 'localizationLatitude'] as const
 type AllFiedls = typeof ListFields[number]
@@ -27,10 +28,10 @@ export class FormItemPage {
 
   constructor(
     private platform: Platform,
-    private location: Location,
+    public location: Location,
     private formBuilder: FormBuilder,
-    private geolocationService: GeolocationService,
-    private cameraService: CameraService
+    public geolocationService: GeolocationService,
+    public cameraService: CameraService
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.backToPreviousPage();
@@ -43,14 +44,14 @@ export class FormItemPage {
       image: ['', Validators.required],
     });
 
-    this.updateLocalization(this.form)
+    this.updateLocalizationFromFormControls(this.form)
   }
 
   backToPreviousPage(): void {
     this.location.back();
   }
 
-  updateLocalization(form: FormGroup<ReactiveFormItemCreate>): void {
+  updateLocalizationFromFormControls(form: FormGroup<ReactiveFormItemCreate>): void {
     if (form.controls.localizationLatitude.value && form.controls.localizationLongitude.value) {
       const localization = this.createLocalizationFromFormControls(form);
       this.localization = localization;
@@ -71,18 +72,33 @@ export class FormItemPage {
   }
 
   async getCurrentLocalization(): Promise<void> {
-    const newLocalization = await this.geolocationService.getCurrentLocalization()
+    const currentLocalization = await this.geolocationService.getCurrentLocalization()
 
-    if(newLocalization) {
-      this.isLocalizationFilled = true
-      this.localization = newLocalization;
-      this.setReactiveFormLocalization(newLocalization);
+    if(currentLocalization) {
+      this.updateLocalizationFromCurrent(currentLocalization)
     }
   }
 
-  async openCamera(): Promise<void> {
-    const image = await this.cameraService.openCamera()
+  updateLocalizationFromCurrent(currentLocalization: Localization): void {
+    this.isLocalizationFilled = true
+    this.localization = currentLocalization;
+    this.setReactiveFormLocalization(currentLocalization);
+  }
 
+  async captureAndSetPhoto(): Promise<void> {
+    const photo = await this.getPhoto()
+
+    if(photo.path) {
+      this.updatePhoto(photo)
+    }
+  }
+
+  async getPhoto(): Promise<Photo> {
+    const photo = await this.cameraService.openCamera()
+    return photo
+  }
+
+  updatePhoto(image: Photo): void {
     if(image.path) {
       this.photo = Capacitor.convertFileSrc(image.path)
       this.form.controls['image'].setValue(this.photo)
