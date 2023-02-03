@@ -158,4 +158,16 @@ describe('form-item.page', () => {
 
     expect(spy).toHaveBeenCalled()
   });
+
+  // ************** toast ****************
+  it('should create and open toast when openToast() is called', async () => {
+    const message = 'hello world'
+    const toast: any = { present: jest.fn() };
+
+    jest.spyOn(formItemPage.toastCtrl, 'create').mockResolvedValue(toast)
+    const spy = jest.spyOn(toast, 'present')
+
+    await formItemPage.openToast(message)
+    expect(spy).toHaveBeenCalled()
+  })
 })
