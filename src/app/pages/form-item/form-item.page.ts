@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormItemCreate } from './form-item-create.interface';
@@ -31,7 +31,8 @@ export class FormItemPage {
     public location: Location,
     private formBuilder: FormBuilder,
     public geolocationService: GeolocationService,
-    public cameraService: CameraService
+    public cameraService: CameraService,
+    public toastCtrl: ToastController
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.backToPreviousPage();
@@ -109,10 +110,19 @@ export class FormItemPage {
     const invalidField = ListFields.find(field => !this.isFieldValid(field))
 
     if(invalidField) {
-      console.log('invalidField: ',invalidField)
+      this.openToast(`Field ${invalidField} invalid`)
     }
 
     return !!invalidField
+  }
+
+  async openToast(message: string): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 1500
+    })
+
+    toast.present()
   }
 
   isFieldValid(field: AllFiedls): boolean {
