@@ -170,4 +170,22 @@ describe('form-item.page', () => {
     await formItemPage.openToast(message)
     expect(spy).toHaveBeenCalled()
   })
+
+  // ************** Check fields ****************
+  it('should return true after check if field name is valid', () => {
+    formItemPage.form.controls.name.setValue('myName')
+    const isNameValid = formItemPage.isFieldValid('name')
+    expect(isNameValid).toBeTruthy()
+  })
+
+  it('should return false if there is no invalid field after check all fields', () => {
+    const localization = makeLocalizationMock()
+    formItemPage.setReactiveFormLocalization(localization)
+    formItemPage.form.controls.image.setValue('image/mock')
+    formItemPage.form.controls.name.setValue('myName')
+
+    const isSomeInvalidField = formItemPage.checkIfHaveSomeInvalidField()
+
+    expect(isSomeInvalidField).toBeFalsy()
+  })
 })
