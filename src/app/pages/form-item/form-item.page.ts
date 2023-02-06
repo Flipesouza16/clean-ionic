@@ -137,6 +137,11 @@ export class FormItemPage {
     const isSomeInvalidField = this.checkIfHaveSomeInvalidField()
     if(isSomeInvalidField) return undefined
 
-    console.log('this.form.controls: ', this.form.controls);
+
+  getFormattedValuesFromFormControls(): FormattedValueFromFormControls {
+    return ListFields.reduce((acumulator, field) => {
+      acumulator[field] = this.form.get(field)?.value!
+      return acumulator
+    }, {} as FormattedValueFromFormControls)
   }
 }
