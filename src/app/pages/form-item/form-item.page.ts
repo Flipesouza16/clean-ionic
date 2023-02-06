@@ -133,7 +133,7 @@ export class FormItemPage {
     return !!this.form.get(field)?.valid
   }
 
-  submit(): void {
+  saveItem(): void {
     const isSomeInvalidField = this.checkIfHaveSomeInvalidField()
     if(isSomeInvalidField) return undefined
 
