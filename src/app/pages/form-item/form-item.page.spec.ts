@@ -44,6 +44,7 @@ describe('form-item.page', () => {
     expect(formItemPage).toBeTruthy()
   })
 
+  // *******************  Geolocalization  ********************
   it('should call location.back() when backToPreviousPage() is called', () => {
     const spy = jest.spyOn(formItemPage.location, 'back')
     formItemPage.backToPreviousPage();
