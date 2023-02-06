@@ -8,6 +8,7 @@ import { Localization } from 'src/app/shared/interfaces/geolocation/geolocation.
 import { Capacitor } from '@capacitor/core';
 import { CameraService } from 'src/app/shared/services/camera/camera.service';
 import { Photo } from '@capacitor/camera';
+import { Preferences } from '@capacitor/preferences';
 
 const ListFields = ['name', 'image', 'localizationLongitude', 'localizationLatitude'] as const
 type AllFiedls = typeof ListFields[number]
@@ -120,6 +121,9 @@ export class FormItemPage {
     return !!invalidField
   }
 
+  /* ACIMA TUDO TESTADO */
+
+  // TESTADO
   async openToast(message: string): Promise<void> {
     const toast = await this.toastCtrl.create({
       message,
@@ -133,10 +137,17 @@ export class FormItemPage {
     return !!this.form.get(field)?.valid
   }
 
-  saveItem(): void {
+  async saveItem(): Promise<void> {
     const isSomeInvalidField = this.checkIfHaveSomeInvalidField()
     if(isSomeInvalidField) return undefined
 
+    const formattedValues = this.getFormattedValuesFromFormControls()
+
+    Preferences.set({
+      key: 'item-form-controls',
+      value: JSON.stringify(formattedValues)
+    })
+  }
 
   getFormattedValuesFromFormControls(): FormattedValueFromFormControls {
     return ListFields.reduce((acumulator, field) => {
