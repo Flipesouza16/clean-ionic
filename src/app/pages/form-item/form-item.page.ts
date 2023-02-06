@@ -12,6 +12,10 @@ import { Photo } from '@capacitor/camera';
 const ListFields = ['name', 'image', 'localizationLongitude', 'localizationLatitude'] as const
 type AllFiedls = typeof ListFields[number]
 
+type FormattedValueFromFormControls = {
+  [key in AllFiedls]: string
+}
+
 @Component({
   selector: 'app-form-item',
   templateUrl: './form-item.page.html',
