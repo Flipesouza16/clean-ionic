@@ -188,4 +188,52 @@ describe('form-item.page', () => {
 
     expect(isSomeInvalidField).toBeFalsy()
   })
+
+  it('should get formatted property from form controls', () => {
+    const formattedValues = formItemPage.getFormattedValuesFromFormControls()
+
+    const hasPropertyImage = formattedValues.hasOwnProperty('image')
+    const hasPropertyLocalizationLatitude = formattedValues.hasOwnProperty('localizationLatitude')
+    const hasPropertyLocalizationLongitude = formattedValues.hasOwnProperty('localizationLongitude')
+    const hasPropertyName = formattedValues.hasOwnProperty('name')
+
+    expect(hasPropertyImage).toBeTruthy()
+    expect(hasPropertyLocalizationLatitude).toBeTruthy()
+    expect(hasPropertyLocalizationLongitude).toBeTruthy()
+    expect(hasPropertyName).toBeTruthy()
+  })
+
+  it('should get formatted values from form controls', () => {
+    const localization = makeLocalizationMock()
+    formItemPage.setReactiveFormLocalization(localization)
+    formItemPage.form.controls.image.setValue('image/mock')
+    formItemPage.form.controls.name.setValue('myName')
+
+    const formattedValues = formItemPage.getFormattedValuesFromFormControls()
+
+    expect(formattedValues.image).toBeTruthy()
+    expect(formattedValues.localizationLatitude).toBeTruthy()
+    expect(formattedValues.localizationLongitude).toBeTruthy()
+    expect(formattedValues.name).toBeTruthy()
+  })
+
+  it('should no call the getFormattedValuesFromFormControls() method when call saveItem() if there is some invalid field', async () => {
+    formItemPage.form.controls.name.setValue(null)
+    const spy = jest.spyOn(formItemPage, 'getFormattedValuesFromFormControls')
+
+    await formItemPage.saveItem()
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  it('should call the getFormattedValuesFromFormControls() method when call saveItem() if all the values are valid', async () => {
+    const localization = makeLocalizationMock()
+    formItemPage.setReactiveFormLocalization(localization)
+    formItemPage.form.controls.image.setValue('image/mock')
+    formItemPage.form.controls.name.setValue('myName')
+
+    const spy = jest.spyOn(formItemPage, 'getFormattedValuesFromFormControls')
+
+    await formItemPage.saveItem()
+    expect(spy).toHaveBeenCalled()
+  })
 })
