@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Device } from '@capacitor/device';
 import { Platform, ToastController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -30,6 +31,7 @@ export class FormItemPage {
   };
   public isLocalizationFilled = false
   public photo = ''
+  public plataforma: string | undefined
 
   constructor(
     private platform: Platform,
@@ -37,8 +39,12 @@ export class FormItemPage {
     private formBuilder: FormBuilder,
     public geolocationService: GeolocationService,
     public cameraService: CameraService,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
   ) {
+    Device.getInfo().then(info => {
+      this.plataforma = info.platform
+    })
+
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.backToPreviousPage();
     });
@@ -94,7 +100,7 @@ export class FormItemPage {
   async captureAndSetPhoto(): Promise<void> {
     const photo = await this.getPhoto()
 
-    if(photo.path) {
+    if(photo) {
       this.updatePhoto(photo)
     }
   }
@@ -105,8 +111,24 @@ export class FormItemPage {
   }
 
   updatePhoto(image: Photo): void {
+    if(this.plataforma !== 'web') {
+      this.updatePhotoMobile(image)
+    }
+    else if(this.plataforma === 'web' && image.webPath) {
+      this.updatePhotoWeb(image)
+    }
+  }
+
+  updatePhotoMobile(image: Photo): void {
     if(image.path) {
       this.photo = Capacitor.convertFileSrc(image.path)
+      this.form.controls['image'].setValue(this.photo)
+    }
+  }
+
+  updatePhotoWeb(image: Photo): void {
+    if(image.webPath) {
+      this.photo = Capacitor.convertFileSrc(image.webPath)
       this.form.controls['image'].setValue(this.photo)
     }
   }
