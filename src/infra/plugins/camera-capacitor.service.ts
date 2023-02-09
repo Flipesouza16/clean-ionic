@@ -9,7 +9,7 @@ export class CameraCapacitorService implements CameraRepository {
 
   async openCamera(): Promise<Photo> {
     const photo = await Camera.getPhoto({
-      quality: 90,
+      quality: 60,
       source: CameraSource.Camera,
       resultType: CameraResultType.Uri
     })
