@@ -31,7 +31,7 @@
       <span position="floating">Image</span>
     </ion-item>
 
-    <img *ngIf="photo?.length" class="image" [src]="photo" alt="">
+    <ion-img *ngIf="photo?.length" class="image" [src]="photo" alt=""></ion-img>
 
     <button class="button-localization" (click)="captureAndSetPhoto()">Open your camera</button>
   </form>
