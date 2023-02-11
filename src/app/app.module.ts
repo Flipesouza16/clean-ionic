@@ -11,6 +11,8 @@ import { GeolocationRepository } from './repositories/geolocation-repository';
 import { GeolocationCapacitorService } from 'src/infra/plugins/geolocation-capacitor.service';
 import { CameraRepository } from './repositories/camera-repository';
 import { CameraCapacitorService } from 'src/infra/plugins/camera-capacitor.service';
+import { StorageRepository } from './repositories/storage-repository';
+import { StorageCapacitorService } from 'src/infra/plugins/storage.capacitor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +31,10 @@ import { CameraCapacitorService } from 'src/infra/plugins/camera-capacitor.servi
     {
       provide: CameraRepository,
       useClass: CameraCapacitorService
+    },
+    {
+      provide: StorageRepository,
+      useClass: StorageCapacitorService
     },
   ],
   bootstrap: [AppComponent],
