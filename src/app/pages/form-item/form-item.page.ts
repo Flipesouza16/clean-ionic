@@ -9,7 +9,7 @@ import { Localization } from 'src/app/shared/interfaces/geolocation/geolocation.
 import { Capacitor } from '@capacitor/core';
 import { CameraService } from 'src/app/shared/services/camera/camera.service';
 import { Photo } from '@capacitor/camera';
-import { Preferences } from '@capacitor/preferences';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 const ListFields = ['name', 'image', 'localizationLongitude', 'localizationLatitude'] as const
 type AllFiedls = typeof ListFields[number]
@@ -40,6 +40,7 @@ export class FormItemPage {
     public geolocationService: GeolocationService,
     public cameraService: CameraService,
     public toastCtrl: ToastController,
+    public storageService: StorageService,
   ) {
     Device.getInfo().then(info => {
       this.plataforma = info.platform
@@ -165,7 +166,7 @@ export class FormItemPage {
 
     const formattedValues = this.getFormattedValuesFromFormControls()
 
-    Preferences.set({
+    await this.storageService.setValue({
       key: 'item-form-controls',
       value: JSON.stringify(formattedValues)
     })
