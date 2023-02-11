@@ -144,9 +144,6 @@ export class FormItemPage {
     return !!invalidField
   }
 
-  /* ACIMA TUDO TESTADO */
-
-  // TESTADO
   async openToast(message: string): Promise<void> {
     const toast = await this.toastCtrl.create({
       message,
