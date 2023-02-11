@@ -10,11 +10,12 @@ import { Capacitor } from '@capacitor/core';
 import { CameraService } from 'src/app/shared/services/camera/camera.service';
 import { Photo } from '@capacitor/camera';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { Router } from '@angular/router';
 
 const ListFields = ['name', 'image', 'localizationLongitude', 'localizationLatitude'] as const
 type AllFiedls = typeof ListFields[number]
 
-type FormattedValueFromFormControls = {
+export type FormattedItemValue = {
   [key in AllFiedls]: string
 }
 
@@ -35,6 +36,7 @@ export class FormItemPage {
 
   constructor(
     private platform: Platform,
+    private router: Router,
     public location: Location,
     private formBuilder: FormBuilder,
     public geolocationService: GeolocationService,
@@ -163,16 +165,32 @@ export class FormItemPage {
 
     const formattedValues = this.getFormattedValuesFromFormControls()
 
+    const { value } = await this.storageService.getValue({ key: 'list-items' })
+
+    const listItems: FormattedItemValue[] = value ? JSON.parse(value) : []
+
+    listItems.push(formattedValues)
+
     await this.storageService.setValue({
-      key: 'item-form-controls',
-      value: JSON.stringify(formattedValues)
+      key: 'list-items',
+      value: JSON.stringify(listItems)
     })
+
+    const toast = await this.toastCtrl.create({
+      message: 'Item added with success!',
+      duration: 1500,
+      position: 'top'
+    })
+
+    await toast.present()
+
+    this.router.navigate([''])
   }
 
-  getFormattedValuesFromFormControls(): FormattedValueFromFormControls {
+  getFormattedValuesFromFormControls(): FormattedItemValue {
     return ListFields.reduce((acumulator, field) => {
       acumulator[field] = this.form.get(field)?.value!
       return acumulator
-    }, {} as FormattedValueFromFormControls)
+    }, {} as FormattedItemValue)
   }
 }
