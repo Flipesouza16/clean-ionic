@@ -6,14 +6,26 @@
 
 <ion-content>
   <ion-list class="list-items">
-    <ion-item class="item">
-      <div class="info-items">
-        <span>Nome item</span>
-        <span>localização atual</span>
+    <ng-template let-item ngFor [ngForOf]="listItems">
+      <ion-item class="item">
+        <div class="info-items">
+          <div class="item-info">
+            <span>{{ item.name }}</span>
+            <span>localização atual</span>
+            <div>
+              <span>Latitude: </span>
+              <span>{{ item.localizationLatitude }}</span>
+            </div>
+            <div>
+              <span>Longitude: </span>
+              <span>{{ item.localizationLongitude }}</span>
+            </div>
+          </div>
 
-        <img src="https://conteudo.imguol.com.br/c/entretenimento/ee/2021/11/04/elden-ring-1636038434161_v2_900x506.jpg" alt="">
-      </div>
-    </ion-item>
+          <ion-img [src]="item.image" alt=""></ion-img>
+        </div>
+      </ion-item>
+    </ng-template>
   </ion-list>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
