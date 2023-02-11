@@ -5,6 +5,7 @@ import { CameraService } from "src/app/shared/services/camera/camera.service";
 import { InMemoryGeolocationRepository } from "src/tests/repositories/in-memory-geolocation-repository";
 import { InMemoryCameraRepository } from "src/tests/repositories/in-memory-camera-repository";
 import { makeLocalizationMock } from "src/tests/factories/geolocation-factory";
+import { Capacitor } from '@capacitor/core';
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormItemPageModule } from "./form-item.module";
@@ -166,6 +167,64 @@ describe('form-item.page', () => {
     await formItemPage.captureAndSetPhoto()
 
     expect(spy).toHaveBeenCalled()
+  });
+
+  it('should call updatePhotoMobile() if plataforma is not web', async () => {
+    const spy = jest.spyOn(formItemPage, 'updatePhotoMobile')
+    formItemPage.plataforma = 'android'
+
+    const photoMock = makePhotoMock()
+
+    formItemPage.updatePhoto(photoMock)
+
+    expect(spy).toHaveBeenCalled()
+  });
+
+  it('should call updatePhotoWeb() if plataforma not web', async () => {
+    const spy = jest.spyOn(formItemPage, 'updatePhotoWeb')
+    formItemPage.plataforma = 'web'
+
+    const photoMock = makePhotoMock()
+
+    formItemPage.updatePhoto(photoMock)
+
+    expect(spy).toHaveBeenCalled()
+  });
+
+  it('should update photo from form when updatePhotoMobile() is called', async () => {
+    const photoMock = makePhotoMock()
+
+    formItemPage.updatePhotoMobile(photoMock)
+
+    expect(formItemPage.form.controls['image']).toBeTruthy()
+  });
+
+  it('should call Capacitor.convertFileSrc() when updatePhotoMobile is called', async () => {
+    const spyConvertFile = jest.spyOn(Capacitor, 'convertFileSrc')
+
+    const photoMock = makePhotoMock()
+
+    formItemPage.updatePhotoMobile(photoMock)
+
+    expect(spyConvertFile).toHaveBeenCalled()
+  });
+
+  it('should update photo from form when updatePhotoWeb() is called', async () => {
+    const photoMock = makePhotoMock()
+
+    formItemPage.updatePhotoWeb(photoMock)
+
+    expect(formItemPage.form.controls['image']).toBeTruthy()
+  });
+
+  it('should call Capacitor.convertFileSrc() when updatePhotoWeb is called', async () => {
+    const spyConvertFile = jest.spyOn(Capacitor, 'convertFileSrc')
+
+    const photoMock = makePhotoMock()
+
+    formItemPage.updatePhotoWeb(photoMock)
+
+    expect(spyConvertFile).toHaveBeenCalled()
   });
 
   // ************** toast ****************
