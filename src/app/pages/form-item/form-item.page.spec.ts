@@ -15,6 +15,7 @@ import { InMemoryStorageRepository } from "src/tests/repositories/in-memory-stor
 describe('form-item.page', () => {
   let formItemPage: FormItemPage
   let fixture: ComponentFixture<FormItemPage>
+  let storageService: StorageService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -41,6 +42,7 @@ describe('form-item.page', () => {
       ]
     }).compileComponents()
 
+    storageService = TestBed.inject(StorageService)
     fixture = TestBed.createComponent(FormItemPage)
     formItemPage = fixture.componentInstance
     fixture.detectChanges()
@@ -242,5 +244,22 @@ describe('form-item.page', () => {
 
     await formItemPage.saveItem()
     expect(spy).toHaveBeenCalled()
+  })
+
+  it('should call storageService.setValue() method when call saveItem() if all the values are valid', async () => {
+    const localization = makeLocalizationMock()
+    formItemPage.setReactiveFormLocalization(localization)
+    formItemPage.form.controls.image.setValue('image/mock')
+    formItemPage.form.controls.name.setValue('myName')
+
+    const formattedValue = formItemPage.getFormattedValuesFromFormControls()
+
+    const spy = jest.spyOn(storageService, 'setValue')
+
+    await formItemPage.saveItem()
+    expect(spy).toHaveBeenCalledWith({
+      key: 'item-form-controls',
+      value: JSON.stringify(formattedValue)
+    })
   })
 })
