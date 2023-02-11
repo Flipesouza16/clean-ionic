@@ -9,6 +9,8 @@ import { makeLocalizationMock } from "src/tests/factories/geolocation-factory";
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormItemPageModule } from "./form-item.module";
 import { makePhotoMock } from "src/tests/factories/camera-factory";
+import { StorageService } from "src/app/shared/services/storage/storage.service";
+import { InMemoryStorageRepository } from "src/tests/repositories/in-memory-storage-repository";
 
 describe('form-item.page', () => {
   let formItemPage: FormItemPage
@@ -29,9 +31,13 @@ describe('form-item.page', () => {
           useClass: InMemoryCameraRepository
         },
         {
+          provide: StorageService,
+          useClass: InMemoryStorageRepository
+        },
+        {
           provide: LocationStrategy,
           useClass: PathLocationStrategy
-        }
+        },
       ]
     }).compileComponents()
 
