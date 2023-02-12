@@ -165,15 +165,13 @@ export class FormItemPage {
 
     const formattedValues = this.getFormattedValuesFromFormControls()
 
-    const { value } = await this.storageService.getValue({ key: 'list-items' })
+    const existingItems = await this.getExistingItems()
 
-    const listItems: FormattedItemValue[] = value ? JSON.parse(value) : []
-
-    listItems.push(formattedValues)
+    existingItems.push(formattedValues)
 
     await this.storageService.setValue({
       key: 'list-items',
-      value: JSON.stringify(listItems)
+      value: JSON.stringify(existingItems)
     })
 
     const toast = await this.toastCtrl.create({
@@ -185,6 +183,14 @@ export class FormItemPage {
     await toast.present()
 
     this.router.navigate([''])
+  }
+
+  async getExistingItems(): Promise<FormattedItemValue[]> {
+    const { value } = await this.storageService.getValue({ key: 'list-items' })
+
+    const listItems: FormattedItemValue[] = value ? JSON.parse(value) : []
+
+    return listItems
   }
 
   getFormattedValuesFromFormControls(): FormattedItemValue {
