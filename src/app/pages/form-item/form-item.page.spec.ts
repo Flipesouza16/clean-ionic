@@ -317,7 +317,7 @@ describe('form-item.page', () => {
 
     await formItemPage.saveItem()
     expect(spy).toHaveBeenCalledWith({
-      key: 'item-form-controls',
+      key: 'list-items',
       value: JSON.stringify(formattedValue)
     })
   })
