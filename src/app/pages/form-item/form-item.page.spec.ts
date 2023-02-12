@@ -321,13 +321,20 @@ describe('form-item.page', () => {
 
     const formattedValue = formItemPage.getFormattedValuesFromFormControls()
 
+    const listItems = [
+      {...formattedValue}
+    ]
+
     const spy = jest.spyOn(storageService, 'setValue')
 
     await formItemPage.saveItem()
+
     expect(spy).toHaveBeenCalledWith({
       key: 'list-items',
-      value: JSON.stringify(formattedValue)
+      value: JSON.stringify(listItems)
     })
+
+  })
 
   it('should return list of item when call getExistingItems()', async () => {
     const localization = makeLocalizationMock()
