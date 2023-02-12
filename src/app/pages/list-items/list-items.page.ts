@@ -23,8 +23,8 @@ export class ListItemsPage {
       const { value } = await this.storageService.getValue({ key: 'list-items' })
 
       if(value) {
-        const formattedValueFromFormControls: FormattedItemValue[] = JSON.parse(value)
-        return formattedValueFromFormControls
+        const formattedValues: FormattedItemValue[] = JSON.parse(value)
+        return formattedValues
       }
 
     } catch(error) {
