@@ -149,7 +149,8 @@ export class FormItemPage {
   async openToast(message: string): Promise<void> {
     const toast = await this.toastCtrl.create({
       message,
-      duration: 1500
+      duration: 1500,
+      position: 'top'
     })
 
     toast.present()
@@ -169,18 +170,12 @@ export class FormItemPage {
 
     existingItems.push(formattedValues)
 
+    this.openToast('Item added with success!')
+
     await this.storageService.setValue({
       key: 'list-items',
       value: JSON.stringify(existingItems)
     })
-
-    const toast = await this.toastCtrl.create({
-      message: 'Item added with success!',
-      duration: 1500,
-      position: 'top'
-    })
-
-    await toast.present()
 
     this.router.navigate([''])
   }
