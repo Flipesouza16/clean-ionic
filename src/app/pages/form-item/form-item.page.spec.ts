@@ -305,6 +305,14 @@ describe('form-item.page', () => {
     expect(spy).toHaveBeenCalled()
   })
 
+  it('should no call the getExistingItems() method when call saveItem() if all the values are valid', async () => {
+    formItemPage.form.controls.name.setValue(null)
+    const spy = jest.spyOn(formItemPage, 'getExistingItems')
+
+    await formItemPage.saveItem()
+    expect(spy).not.toHaveBeenCalled()
+  })
+
   it('should call storageService.setValue() method when call saveItem() if all the values are valid', async () => {
     const localization = makeLocalizationMock()
     formItemPage.setReactiveFormLocalization(localization)
@@ -320,5 +328,23 @@ describe('form-item.page', () => {
       key: 'list-items',
       value: JSON.stringify(formattedValue)
     })
+
+  it('should return list of item when call getExistingItems()', async () => {
+    const localization = makeLocalizationMock()
+    formItemPage.setReactiveFormLocalization(localization)
+    formItemPage.form.controls.image.setValue('image/mock')
+    formItemPage.form.controls.name.setValue('myName')
+
+    const formattedValue = formItemPage.getFormattedValuesFromFormControls()
+
+    const listItems = [
+      {...formattedValue}
+    ]
+
+    await formItemPage.saveItem()
+
+    const existingItems = await formItemPage.getExistingItems()
+
+    expect(existingItems).toStrictEqual(listItems)
   })
 })
